@@ -1,0 +1,47 @@
+[
+  {
+    "name": "selenium-hub-node",
+    "image": "selenium/hub:3.11.0-dysprosium",
+    "memoryReservation": 2048,
+    "essential": true,
+    "portMappings" : [
+      {
+        "containerPort": 4444,
+        "hostPort" : 4444,
+        "protocol" : "tcp"
+      }
+    ],
+    "environment" : [
+      {"name" : "GRID_NEW_SESSION_WAIT_TIMEOUT", "value": "-1"},
+      {"name" : "GRID_JETTY_MAX_THREADS", "value": "-1"},
+      {"name" : "GRID_NODE_POLLING", "value": "10"},
+      {"name" : "GRID_CLEAN_UP_CYCLE", "value": "10"},
+      {"name" : "GRID_TIMEOUT", "value": "10"},
+      {"name" : "GRID_BROWSER_TIMEOUT", "value": "10"}
+    ]
+  },
+  {
+    "name": "selenium-node-chrome",
+    "image": "selenium/node-chrome:3.11.0-dysprosium",
+    "links" : [
+      "selenium-hub-node:hub"
+    ],
+    "memoryReservation": 2048,
+    "environment" : [
+      {"name" : "NODE_MAX_SESSION", "value": "50"},
+      {"name" : "NODE_MAX_INSTANCES", "value": "50"}
+    ]
+  },
+  {
+    "name": "selenium-node-firefox",
+    "image": "selenium/node-firefox:3.11.0-dysprosium",
+    "links" : [
+      "selenium-hub-node:hub"
+    ],
+    "memoryReservation": 2048,
+    "environment" : [
+      {"name" : "NODE_MAX_SESSION", "value": "50"},
+      {"name" : "NODE_MAX_INSTANCES", "value": "50"}
+    ]
+  }
+]
